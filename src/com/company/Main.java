@@ -9,14 +9,15 @@ import java.util.Random;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        System.out.println("Введите диапазон чисел в формате \"[a;b]\": ");
+        int[] intRangeArray;
+        int[] intArray;
 
-        System.out.println(Arrays.toString( getRandomRange(getRange(inConsole().trim())) ));
-    }
-
-    static String inConsole () throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        return br.readLine();
+
+        System.out.println("Введите диапазон чисел в формате \"[a;b]\": ");
+        intRangeArray = getRange(br.readLine().trim());
+        intArray = getRandomArray(intRangeArray[0], intRangeArray[1]);
+        System.out.println(Arrays.toString( intArray ));
     }
 
     static int[] getRange(String str) {
@@ -47,26 +48,12 @@ public class Main {
         return array;
     }
 
-    static int[] getRandomRange (int[] ar) {
+    static int[] getRandomArray(int min, int max) {
         Random rand = new Random();
         int[] rr = new int[10];
 
-        if (ar[0] >= 0) {
-            for (int i = 0; i < 10; i++) {
-                rr[i] = (rand.nextInt(ar[1] - ar[0] + 1) + ar[0]);
-            }
-        }
-        else {
-            if (ar[1] >= 0) {
-                for (int i = 0; i < 10; i++) {
-                    rr[i] = (rand.nextInt( Math.abs(ar[0]) + ar[1] +1) + ar[0]);
-                }
-            }
-            else {
-                for (int i = 0; i < 10; i++) {
-                    rr[i] = (rand.nextInt(Math.abs(ar[0] - ar[1]) + 1)+ ar[0]);
-                }
-            }
+        for (int i = 0; i < 10; i++) {
+            rr[i] = (rand.nextInt( max - min + 1) + min);
         }
         return rr;
     }
